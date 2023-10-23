@@ -1,7 +1,8 @@
-import React from "react"
-import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem"
+import React from "react";
+import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
+
 export const ImageGallery = ({ images, onImageClick }) => (
-     <ul>
+  <ul>
     {images.map((image) => (
       <ImageGalleryItem
         key={image.id}
@@ -10,4 +11,4 @@ export const ImageGallery = ({ images, onImageClick }) => (
       />
     ))}
   </ul>
-)
+);
