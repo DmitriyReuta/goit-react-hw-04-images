@@ -14,6 +14,7 @@ export function App() {
   const [, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [hasMoreImages, setHasMoreImages] = useState(true);
+
   const fetchImages = useCallback(() => {
     setIsLoading(true);
     const apiKey = "39227373-dd01e2c6342e880b425481406";
@@ -24,7 +25,6 @@ export function App() {
       .get(apiUrl)
       .then((response) => {
         setImages((prevImages) => [...prevImages, ...response.data.hits]);
-        setPage((prevPage) => prevPage + 1);
         setHasMoreImages(response.data.hits.length === perPage);
       })
       .catch((error) => console.error("Error fetching images: ", error))
@@ -38,17 +38,16 @@ export function App() {
   }, [query, page]);
 
   useEffect(() => {
-  if (query !== "") {
-    setPage(1);
-    setImages([]);
-    setHasMoreImages(true);
-    fetchImages();
+    if (query !== "") {
+      fetchImages();
     }
-    // eslint-disable-next-line
-}, [query]);
+  }, [query, fetchImages]);
 
   const handleQuerySubmit = (query) => {
     setQuery(query);
+    setPage(1);
+    setImages([]); 
+    setHasMoreImages(true);
   };
 
   const handleImageClick = (largeImageURL) => {
@@ -77,8 +76,8 @@ export function App() {
           color="#e15b64"
         />
       )}
-      {!images.length ? null : hasMoreImages && !isLoading && (
-        <Button onClick={fetchImages} hasMoreImages={hasMoreImages} />
+      {images.length > 0  && hasMoreImages && !isLoading && (
+        <Button onClick={() => setPage((prevPage) => prevPage + 1)} hasMoreImages={hasMoreImages} />
       )}
       <ModalComponent
         largeImageURL={selectedImage}
