@@ -14,13 +14,14 @@ export function App() {
   const [ , setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [hasMoreImages, setHasMoreImages] = useState(true);
-
   useEffect(() => {
     if (query !== "") {
       setPage(1);
       setImages([]);
       setHasMoreImages(true);
-      fetchImages();
+      // eslint-disable-next-line
+      fetchImages(); 
+
     }
   }, [query]);
 
