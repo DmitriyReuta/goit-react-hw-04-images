@@ -25,11 +25,10 @@ export function App() {
   }, [query]);
 
   const fetchImages = () => {
+    setIsLoading(true);
     const apiKey = "39227373-dd01e2c6342e880b425481406";
     const perPage = 12;
     const apiUrl = `https://pixabay.com/api/?q=${query}&page=${page}&key=${apiKey}&image_type=photo&orientation=horizontal&per_page=${perPage}`;
-
-    setIsLoading(true);
 
     axios
       .get(apiUrl)
@@ -69,8 +68,8 @@ export function App() {
       {isLoading && (
         <MagnifyingGlass
           visible={true}
-          height={80}
-          width={80}
+          height="80"
+          width="80"
           ariaLabel="MagnifyingGlass-loading"
           wrapperStyle={{}}
           wrapperClass="MagnifyingGlass-wrapper"
