@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { ImageGallery } from "./ImageGallery/ImageGallery";
 import { Button } from "./Button/Button";
@@ -11,21 +11,10 @@ export function App() {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [ , setShowModal] = useState(false);
+  const [, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [hasMoreImages, setHasMoreImages] = useState(true);
-  useEffect(() => {
-    if (query !== "") {
-      setPage(1);
-      setImages([]);
-      setHasMoreImages(true);
-      // eslint-disable-next-line
-      fetchImages(); 
-
-    }
-  }, [query]);
-
-  const fetchImages = () => {
+  const fetchImages = useCallback(() => {
     setIsLoading(true);
     const apiKey = "39227373-dd01e2c6342e880b425481406";
     const perPage = 12;
@@ -46,7 +35,17 @@ export function App() {
           behavior: "smooth",
         });
       });
-  };
+  }, [query, page]);
+
+  useEffect(() => {
+  if (query !== "") {
+    setPage(1);
+    setImages([]);
+    setHasMoreImages(true);
+    fetchImages();
+    }
+    // eslint-disable-next-line
+}, [query]);
 
   const handleQuerySubmit = (query) => {
     setQuery(query);
