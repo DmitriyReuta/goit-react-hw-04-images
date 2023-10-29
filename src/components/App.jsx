@@ -11,7 +11,7 @@ export function App() {
   const [images, setImages] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [ , setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [hasMoreImages, setHasMoreImages] = useState(true);
 
